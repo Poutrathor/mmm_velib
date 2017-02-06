@@ -13,16 +13,15 @@ Module.register("mmm_velib", {
 	defaults: {
 
 		stations: [{
-					nom: "mulhouse",
-					number: "11",
-					contract: "mulhouse"
-				},{ 
-					nom: "Place Bir Hakeim", 
-					number: "3039",
-					contract: "lyon"
-				}
-
-		],
+			name: "ILE DE LA CITE PONT NEUF", // The name here is only for the human user. Not use after
+			// We use the station name from the operator to avoid any issue (feature?). 
+			number: "01001",
+			contract: "paris"
+		}, {
+			name: "louis lepine",
+			number: "4002",
+			contract: "paris"
+		}],
 		showAvailableBikes: true,
 		showAvailableSlots: true,
 		showLastCheckTime: true,
@@ -74,7 +73,7 @@ Module.register("mmm_velib", {
 			
 
 		} else if (notification === "FETCH_ERROR") {
-			Log.error("mmm_velib Error. Could not fetch JCDeceaux API results: " + payload.url);
+			Log.error("mmm_velib Error. Could not fetch JCDecaux API results: " + payload.url);
 		} else if (notification === "INCORRECT_URL") {
 			Log.error("mmm_velib Error. Incorrect url : " + payload.url + "  -- Are the stations data properly configurated ?");
 		} else {
