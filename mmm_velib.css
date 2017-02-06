@@ -1,0 +1,24 @@
+.mmm_velib .station_name {
+  padding-right: 25px;
+  text-align: left;
+}
+
+
+.mmm_velib .title {
+  padding-left: 25px;
+  padding-right: 25px;
+  text-align: left;
+}
+
+.mmm_velib .chiffre {
+  padding-left: 25px;
+  padding-right: 25px;
+  text-align: center;
+}
+
+.mmm_velib .time {
+  padding-left: 30px;
+  text-align: right;
+}
+
+
