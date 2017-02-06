@@ -26,7 +26,7 @@ modules: [
 		position: 'top_right',	// This can be any of the regions. 
 		config: {
 			// The config property is NOT optional.
-			// If no config is set, 2 stations from the center of Paris will be displayed
+			// Else, if no config is set, 2 stations from the center of Paris will be displayed
 			// See 'Configuration options' for more information.
 
 			stations: [{
@@ -37,11 +37,7 @@ modules: [
 					nom: "Place Bir Hakeim", // All your stations should belong to the same big city contract but technically you can display from other place if you like. I don't see the point though. 
 					number: "3039",
 					contract: "lyon"
-				}],
-			showAvailableBikes: true, // If you want the module to NOT display available bikes, set it to false, else, don't touch it :) 
-			showAvailableSlots: true, // If you want the module to NOT display available slots, set it to false, else, don't touch it :) 
-			showLastCheckTime: true, // If you want the module to NOT display the last update time, set it to false, else, don't touch it :)
-			reloadInterval: 5 * 60 * 1000, // Every 5 mins. The polling speed to the JCDeceaux API. The stations data seem to be updated at a somewhat low rate, every 5 to 10 minutes. So there should be no real need to pool faster than 5 minutes. 
+				}]
 			
 			}
 	}
@@ -64,36 +60,39 @@ The following properties can be configured:
 	<tbody>
 
 		<tr>
-			<td><code>feeds</code></td>
-			<td>An array of feed urls that will be used as source.<br>
+			<td><code>stations</code></td>
+			<td>An array of CycloCity Stations Number and Contract whose status will be displayed.<br>
 				More info about this object can be found below.
-				<br><b>Default value:</b> <code>[
-					{
-						title: "New York Times",
-						url: "http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml",
-						encoding: "UTF-8"
-					}
-				]</code>
+				<br><b>Default value:</b> <code>[{
+			nom: "ILE DE LA CITE PONT NEUF", // The name here is only for the human user. Not use after
+			// We use the station name from the operator to avoid any issue (feature?). 
+			number: "01001",
+			contract: "paris"
+		}, {
+			nom: "louis lepine",
+			number: "4002",
+			contract: "paris"
+		}]</code>
 			</td>
 		</tr>
 
 		<tr>
-			<td><code>showSourceTitle</code></td>
-			<td>Display the title of the source.<br>
+			<td><code>showAvailableBikes</code></td>
+			<td>Display the number of available bikes at each station. Set to <code>false</code> to NOT see that information<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
 				<br><b>Default value:</b> <code>true</code>
 			</td>
 		</tr>
 		<tr>
-			<td><code>showPublishDate</code></td>
-			<td>Display the publish date of an headline.<br>
+			<td><code>showAvailableSlots</code></td>
+			<td>Display the number of free slots to park a bike at each station. Set to <code>false</code> to NOT see that information<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
 				<br><b>Default value:</b> <code>true</code>
 			</td>
 		</tr>
 		<tr>
-			<td><code>showDescription</code></td>
-			<td>Display the description of an item.<br>
+			<td><code>showLastCheckTime</code></td>
+			<td>Display how long ago was the station's data information refreshed. The module pools by default every 5 minutes, but JCDeceaux updates its information whenever and not that frequently. Set to <code>false</code> to NOT see that information<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
 				<br><b>Default value:</b> <code>false</code>
 			</td>
@@ -101,28 +100,21 @@ The following properties can be configured:
 
 		<tr>
 			<td><code>reloadInterval</code></td>
-			<td>How often does the content needs to be fetched? (Milliseconds)<br>
+			<td>How often does the station data needs to be fetched? (Milliseconds) Recommand : 5 minutes, no less than one minute (JCDeceaux certifies that period update will never be lower than one minute, experience shows around 5-10 minutes. <br>
 				<br><b>Possible values:</b> <code>1000</code> - <code>86400000</code>
 				<br><b>Default value:</b> <code>300000</code> (5 minutes)
 			</td>
 		</tr>
 		<tr>
 			<td><code>updateInterval</code></td>
-			<td>How often do you want to display a new headline? (Milliseconds)<br>
+			<td>For TESTING & DEVELOPMENT. How often does the display refresh (Milliseconds). It has to refresh at least every minute when <code>showLastCheckTime</code> is set to <code>true</code>. Don't touch that<br>
 				<br><b>Possible values:</b><code>1000</code> - <code>60000</code>
-				<br><b>Default value:</b> <code>10000</code> (10 seconds)
+				<br><b>Default value:</b> <code>60000</code> (60 seconds)
 			</td>
 		</tr>
 		<tr>
-			<td><code>animationSpeed</code></td>
-			<td>Speed of the update animation. (Milliseconds)<br>
-				<br><b>Possible values:</b><code>0</code> - <code>5000</code>
-				<br><b>Default value:</b> <code>2500</code> (2.5 seconds)
-			</td>
-		</tr>
-		<tr>
-			<td><code>maxNewsItems</code></td>
-			<td>Total amount of news items to cycle through. (0 for unlimited)<br>
+			<td><code>maxStationsDisplayed</code></td>
+			<td>Total amount of stations being displayed. 0 for as many as you configured. Stay to 0.<br>
 				<br><b>Possible values:</b><code>0</code> - <code>...</code>
 				<br><b>Default value:</b> <code>0</code>
 			</td>
