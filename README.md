@@ -35,7 +35,7 @@ From https://github.com/MichMich/MagicMirror/wiki/MagicMirror%C2%B2-Modules
 Follow these steps:
 
  - Navigate to the modules folder via the follow command: <code>cd ~/MagicMirror/modules</code>.
- - Clone the module from github: <code>git clone https://github.com/Poutrathor/MMM_velib</code> 
+ - Clone the module from github: <code>git clone https://github.com/Poutrathor/mmm_velib</code> 
  - Configure as described below.
 
 ## Configure the module
