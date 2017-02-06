@@ -1,18 +1,28 @@
 # Module: mmm_velib
-The `Velib` module is displaying the stations data from JCDecaux's bike sharing system. 
-Depending on the configurated stations, the user can see : 
+The `Velib` module is displaying the stations last updated data from JCDecaux's bike sharing system, CycloCity. That system is marketed under several names across France, Belgium, Spain and other countries. 
+
+Le module 'Velib' affiche les informations à jour des stations de vélos du système de JCDecaux, CycloCity. Celui-ci est déployé dans de nombreuses villes sous des noms commerciaux comme Vélib ou Vélo'v et plusieurs pays.   
+
+The module is compatible with the following cities // Il est compatible avec les villes suivantes : 
+https://fr.wikipedia.org/wiki/Cyclocity#Services_en_fonction 
+
+You have to fill in the stations you want to follow, e.g. the stations close to your home, your workplace or your gym. The module will displayed the following data about these stations : 
+
  - available bikes
  - available slots
  - how long ago was this information updated
 
-It is compatible with the following cities // Il est compatible avec les villes suivantes : 
-https://fr.wikipedia.org/wiki/Cyclocity#Services_en_fonction 
+Vous devez configurer les stations dont vous souhaitez voir les informations en live, par exemple les stations proches de chez vous, de votre lieu de travail ou de votre salle de gym. Le module affichera alors les informations suivantes pour chaque stations : 
+
+ - vélos disponibles
+ - bornes disponibles
+ - temps écoulé depuis la dernière mise à jour des informations. 
 
 It has been tested for // Le module a été testé pour : 
 
  - Paris, Lyon, Mulhouse, Toulouse, Sevilla (Spain). 
  
-For others cities, it should work aswell, in case of unexpected issue, ask for my help at the MagicMirror Forum, link below // Pour les autres villes non vérifiées, le fonctionnement devrait être le même, en cas de bug, contacter-moi sur le forum MagicMirror ici : 
+For not tested cities, it should work aswell, in case of unexpected issue, ask for my help at the MagicMirror Forum, link below // Pour les autres villes non vérifiées, le fonctionnement devrait être le même, en cas de bug, contacter-moi sur le forum MagicMirror ici : 
 
 https://forum.magicmirror.builders/category/10/troubleshooting 
 
@@ -158,7 +168,9 @@ The `stations` property contains an array with 3 objects. These objects have the
 		<tr>
 			<td><code>contract</code></td>
 			<td>That's the second <b>key identifier</b> with <code>number</code> above. It is the name of the city which bought the bike sharing scheme from JCDecaux.<br>
-				<br><b>Possible values:</b><code>paris</code> for Vélib', <code>lyon</code>, <code>seville</code> for Sevici in Sevilla. Notice how Sevilla took the French spelling since JCDecaux is a French company. For not French cities, you might have to test a few spellings to get the right one.  
+				<br><b>Possible values:</b><code>paris</code> for Vélib', <code>lyon</code> for Vélo'v, <code>seville</code> for Sevici in Sevilla. 
+				<br>When a bike sharing scheme overlaps over suburbs cities, the contract name stays the same, generally the big city name. For Paris suburbs, contracts same is still <code>paris</code>. 
+				<br>Notice how Sevilla took the French spelling <code>seville</code> since JCDecaux is a French company. For not French cities, you might have to test a few spellings to get the right one.  
 			</td>
 		</tr>
 
