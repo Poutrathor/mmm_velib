@@ -40,11 +40,11 @@ modules: [
 			// See 'Configuration options' for more information.
 
 			stations: [{
-					nom: "home - rue Obama",
+					name: "home - rue Obama",
 					number: "11",  
 					contract: "mulhouse"  
 				},{ 
-					nom: "Place Bir Hakeim", // All your stations should belong to the same big city contract but technically you can display from other place if you like. I don't see the point though. 
+					name: "Place Bir Hakeim", // All your stations should belong to the same big city contract but technically you can display from other place if you like. I don't see the point though. 
 					number: "3039",
 					contract: "lyon"
 				}]
@@ -74,11 +74,11 @@ The following properties can be configured:
 			<td>An array of CycloCity Stations Number and Contract whose status will be displayed.<br>
 				More info about this object can be found below.
 				<br><b>Default value:</b> <code>[{
-			nom: "ILE DE LA CITE PONT NEUF",  
+			name: "ILE DE LA CITE PONT NEUF",  
 			number: "01001",
 			contract: "paris"
 		}, {
-			nom: "louis lepine",
+			name: "louis lepine",
 			number: "4002",
 			contract: "paris"
 		}]</code>
