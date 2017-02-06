@@ -4,14 +4,16 @@ Depending on the configurated stations, the user can see :
  - available bikes
  - available slots
  - how long ago was this information updated
-It is compatible with the following cities : 
-Il est compatible avec les villes suivantes : 
+
+It is compatible with the following cities // Il est compatible avec les villes suivantes : 
 https://fr.wikipedia.org/wiki/Cyclocity#Services_en_fonction 
-It has been tested for : 
-Le module a été testé pour : 
+
+It has been tested for // Le module a été testé pour : 
+
  - Paris, Lyon, Mulhouse, Toulouse. 
-For others cities, it should work aswell, in case of unexpected issue, ask for my help at the MagicMirror Forum, here : 
-Pour les autres villes non vérifiées, le fonctionnement devrait être le même, en cas de bug, contacter-moi sur le forum MagicMirror ici : 
+ 
+For others cities, it should work aswell, in case of unexpected issue, ask for my help at the MagicMirror Forum, link below // Pour les autres villes non vérifiées, le fonctionnement devrait être le même, en cas de bug, contacter-moi sur le forum MagicMirror ici : 
+
 https://forum.magicmirror.builders/category/10/troubleshooting 
 
 ## Using the module
