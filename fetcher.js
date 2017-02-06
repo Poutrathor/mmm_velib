@@ -12,12 +12,11 @@ var iconv = require("iconv-lite");
 /* Fetcher
  * Responsible for requesting an update on the set interval and broadcasting the data.
  *
- * attribute url string - URL of the news feed.
- * attribute reloadInterval number - Reload interval in milliseconds.
+ * attribute url string - URL calling the API with the station number and the contract name.
+ * attribute reloadInterval number - Polling interval in milliseconds.
  */
-
 var Fetcher = function(url, reloadInterval, encoding) {
-	console.log(url);
+	// console.log(url);
 	var startedTime = (new Date).getTime();
 	var self = this;
 	if (reloadInterval < 60000) { 
@@ -35,56 +34,31 @@ var Fetcher = function(url, reloadInterval, encoding) {
 
 	/* private methods */
 
-	/* fetchNews()
-	 * Request the new items.
+	/* fetchStationData()
+	 * Request the last updated data for that station .
 	 */
 
-	var fetchNews = function() {
+	var fetchStationData = function() {
 		clearTimeout(reloadTimer); //why clearing the timeour before starting an internet request ? 
 		reloadTimer = null;
-		console.log("*******  fetch Cyclocity data **** "+((new Date).getTime()-startedTime)/1000);
+		// console.log("*******  fetch Cyclocity data **** "+((new Date).getTime()-startedTime)/1000);
 		request(url, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
-				console.log(body) 
+				// console.log(body) 
 				results = JSON.parse(body);
 				// manage results
-				console.log("results "+results);
+				// console.log("results "+results);
 				/*items = Object.keys(jsonResult).map(function(k) {
 					return jsonResult[k]
 				});*/
 				self.broadcastItems();
 				scheduleTimer();
 			} else {
-				console.log("error : "+response.statusCode);
+				// console.log("error : "+response.statusCode);
 				fetchFailedCallback(self, error);
 				scheduleTimer();
 			}
 		})
-/*
-		var xmlHttp = new XMLHttpRequest();
-		var responseText;
-		xmlHttp.onreadystatechange = function() {
-			console.log("getNewStatus onreadystatuschange : " + xmlHttp.status);
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				responseText = xmlHttp.responseText;
-				console.log("responseText = " + responseText);
-				if (responseText == null || responseText === undefined) {} else {
-					jsonResult = JSON.parse(responseText);
-					// manage results
-					items = Object.keys(jsonResult).map(function(k) { return jsonResult[k] });
-					self.broadcastItems();
-					scheduleTimer();
-				}
-			} else if (xmlHttp.readyState == 4 && xmlHttp.status == 403) {
-				// API key issue most probably 
-				console.log("getNewStatus xmlHttp.status : " + xmlHttp.status);
-				fetchFailedCallback(self, error);
-				scheduleTimer();
-			}
-		}
-		xmlHttp.open("GET", called_url, true);
-		xmlHttp.send(null);*/
-
 
 	};
 
@@ -93,10 +67,10 @@ var Fetcher = function(url, reloadInterval, encoding) {
 	 */
 
 	var scheduleTimer = function() {
-		//console.log('Schedule update timer.');
+		//// console.log('Schedule update timer.');
 		clearTimeout(reloadTimer);
 		reloadTimer = setTimeout(function() {
-			fetchNews();
+			fetchStationData();
 		}, reloadInterval);
 	};
 
@@ -114,10 +88,10 @@ var Fetcher = function(url, reloadInterval, encoding) {
 	};
 
 	/* startFetch()
-	 * Initiate fetchNews();
+	 * Initiate fetchStationData();
 	 */
 	this.startFetch = function() {
-		fetchNews();
+		fetchStationData();
 	};
 
 	/* broadcastItems()
@@ -125,10 +99,10 @@ var Fetcher = function(url, reloadInterval, encoding) {
 	 */
 	this.broadcastItems = function() {
 		if (results === undefined) {
-			console.log('No items to broadcast yet.');
+			// console.log('No items to broadcast yet.');
 			return;
 		}
-		console.log('Broadcasting ' + results);
+		// console.log('Broadcasting ' + results);
 		itemsReceivedCallback(self);
 	};
 

@@ -14,7 +14,7 @@ Module.register("mmm_velib", {
 
 		stations: [{
 			name: "ILE DE LA CITE PONT NEUF", // The name here is only for the human user. Not use after
-			// We use the station name from the operator to avoid any issue (feature?). 
+			// We use the station name from the operator to avoid any issue (feature?).
 			number: "01001",
 			contract: "paris"
 		}, {
@@ -53,7 +53,7 @@ Module.register("mmm_velib", {
 
 	// Define start sequence.
 	start: function() {
-		Log.info("Starting module: " + this.name);
+		// Log.info("Starting module: " + this.name);
 
 		// Set locale.
 		moment.locale(config.language);
@@ -67,17 +67,17 @@ Module.register("mmm_velib", {
 
 	// Override socket notification handler.
 	socketNotificationReceived: function(notification, payload) {
-		Log.info("notification received " + notification);
+		// Log.info("notification received " + notification);
 		if (notification === "VELIB_STATUS") {
 			this.generateStationDataFeed(payload);
-			
+
 
 		} else if (notification === "FETCH_ERROR") {
-			Log.error("mmm_velib Error. Could not fetch JCDecaux API results: " + payload.url);
+			// Log.error("mmm_velib Error. Could not fetch JCDecaux API results: " + payload.url);
 		} else if (notification === "INCORRECT_URL") {
-			Log.error("mmm_velib Error. Incorrect url : " + payload.url + "  -- Are the stations data properly configurated ?");
+			// Log.error("mmm_velib Error. Incorrect url : " + payload.url + "  -- Are the stations data properly configurated ?");
 		} else {
-			Log.log("mmm_velib received an unknown socket notification: " + notification);
+			// Log.log("mmm_velib received an unknown socket notification: " + notification);
 		}
 		if (!this.loaded) {
 			this.scheduleUpdateInterval();
@@ -91,70 +91,42 @@ Module.register("mmm_velib", {
 	// Override dom generator.
 	getDom: function() {
 
-		Log.info("getDom");
+		// Log.info("getDom");
+
+		this.contractList = {
+			PARIS: "Vélib'",
+			LYON: "Vélo'v",
+			MULHOUSE: "VéloCité",
+			BESANCON: "VéloCité",
+			MARSEILLE: "Le vélo",
+			TOULOUSE: "VélôToulouse",
+			ROUEN: "Cy'clic",
+			AMIENS: "Vélam",
+			NANTES: "Bicloo",
+			NANCY: "vélOstan'lib",
+			"CERGY-PONTOISE": "VélO2",
+			"PLAINE-COMMUNE": "Velcom",
+			CRETEIL: "Cristolib"
+		};
+		var marque = "Cyclocity";
 
 		var wrapper = document.createElement("table");
 		wrapper.className = "small";
-		// Module Main City : 
+		// Module Main City :
 		if (this.stationsData.length > 0) {
-			Log.log("getDom - displaying a caption for contract : " + this.stationsData[0].contract_name);
-			// Hypothesis : users will track bikes in only one city, no more. 
+			// Log.log("getDom - displaying a caption for contract : " + this.stationsData[0].contract_name);
+			// Hypothesis : users will track bikes in only one city, no more.
 			// Thus, first station contract name is good enough :
-			var marque = "";
-			switch (this.stationsData[0].contract_name.toUpperCase()) { 
-				// http://stackoverflow.com/questions/2140627/javascript-case-insensitive-string-comparison 
-				// WARNING : can have issue if internalisation (one day) matters. 
-				case "PARIS":
-					marque = "Velib'";
-					break;
-				case "LYON":
-					marque = "Vélo'v";
-					break;
-				case "MULHOUSE":
-					marque = "VéloCité";
-					break;
-				case "BESANCON":
-					marque = "VéloCité";
-					break;
-				case "MARSEILLE":
-					marque = "Le vélo";
-					break;
-				case "TOULOUSE":
-					marque = "VélôToulouse";
-					break;
-				case "ROUEN":
-					marque = "Cy'clic";
-					break;
-				case "AMIENS":
-					marque = "Velib";
-					break;
-				case "NANTES":
-					marque = "Bicloo";
-					break;
-				case "NANCY":
-					marque = "vélOstan'lib";
-					break;
-				case "CERGY-PONTOISE":
-					marque = "VélO2";
-					break;
-				case "PLAINE-COMMUNE":
-					marque = "Velcom";
-					break;
-				case "CRETEIL":
-					marque = "Cristolib";
-					break;
-				default:
-					marque = "Cyclocity";
-					break;
+			var contractName = this.stationsData[0].contract_name.toUpperCase();
+			if (this.contractList.hasOwnProperty(contractName)) {
+				marque = this.contractList[contractName];
 			}
 			var caption = document.createElement("caption");
 			caption.innerHTML = marque;
 			wrapper.appendChild(caption);
-
-
 		}
 
-		// Module Title : "Velib : velo + slots" : 
+		// Module Title : "Velib : velo + slots" :
 		var titleWrapper = document.createElement("tr");
 		var stationCode = document.createElement("th");
 		stationCode.className = "station_name";
@@ -194,7 +166,7 @@ Module.register("mmm_velib", {
 
 		if (this.stationsData.length > 0) {
 
-			Log.info("this.stationsData.length > 0");
+			// Log.info("this.stationsData.length > 0");
 
 			//for (n = 0; n < this.stationsData.length; n++) {
 			for (var n in this.stationsData) {
@@ -226,14 +198,14 @@ Module.register("mmm_velib", {
 					stationState.appendChild(updtTime);
 				}
 
-				Log.info("updated");
+				// Log.info("updated");
 
 				wrapper.appendChild(stationState);
 			}
 
 		} else {
 
-			Log.info("LOADING");
+			// Log.info("LOADING");
 			wrapper.innerHTML = this.translate("LOADING");
 			// wrapper.className = "small dimmed";
 		}
@@ -261,11 +233,11 @@ Module.register("mmm_velib", {
 	generateStationDataFeed: function(array_json_status) {
 		var stationsData = [];
 		for (var n in array_json_status) {
-			Log.info("var n in array_json_status : n = " + n);
+			// Log.info("var n in array_json_status : n = " + n);
 			stationsData.push(array_json_status[n]);
 		}
-		Log.info("generateStationDataFeed - stations : " + JSON.stringify(stationsData[0]));
-		Log.info("stationsData[0] - name : " + stationsData[0].name);
+		// Log.info("generateStationDataFeed - stations : " + JSON.stringify(stationsData[0]));
+		// Log.info("stationsData[0] - name : " + stationsData[0].name);
 
 		stationsData.sort(function(a, b) {
 
@@ -275,8 +247,8 @@ Module.register("mmm_velib", {
 			stationsData = stationsData.slice(0, this.config.maxStationsDisplayed);
 		}
 		this.stationsData = stationsData;
-		Log.info("this.stationsData[0] - name : " + this.stationsData[0].available_bikes);
-		Log.info("there are " + this.stationsData.length + " stations");
+		// Log.info("this.stationsData[0] - name : " + this.stationsData[0].available_bikes);
+		// Log.info("there are " + this.stationsData.length + " stations");
 	},
 
 	/* followThatStation(feedUrl)
@@ -328,19 +300,9 @@ Module.register("mmm_velib", {
 		}, this.config.updateInterval);
 	},
 
-	/* capitalizeFirstLetter(string)
-	 * Capitalizes the first character of a string.
-	 *
-	 * argument string string - Input string.
-	 *
-	 * return string - Capitalized output string.
-	 */
-	capitalizeFirstLetter: function(string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	},
 
 	/*
-		Get Time since last update timestamp : 
+		Get Time since last update timestamp :
 	*/
 	getTimeSinceLastUpdate: function(t) {
 		var milliseconds = (new Date).getTime();
@@ -349,16 +311,16 @@ Module.register("mmm_velib", {
 		else return Math.floor(min).toString() + " min";
 	},
 
-	/* 
+	/*
 		Get time since last updates with seconds. for testing only :
-		it allows us to check easily that refreshing the displayed data is  occuring as expected. 
+		it allows us to check easily that refreshing the displayed data is  occuring as expected.
 		*/
 	getTimeSinceLastUpdateSeconds: function(t) {
 		var milliseconds = (new Date).getTime();
 		var min = (milliseconds - t) / 1000 / 60;
 		var secs = (milliseconds - t)/ 1000;
 		return Math.floor(min).toString() + " min " + Math.floor(secs).toString()%60 + "s";
-		
+
 	}
 
 });

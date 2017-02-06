@@ -1,7 +1,8 @@
 /* Magic Mirror
- * Node Helper: Newsfeed
+ * Node Helper: mmm_velib
  *
  * By Michael Teeuw http://michaelteeuw.nl
+ * modified for mmm_velib
  * MIT Licensed.
  */
 
@@ -12,7 +13,7 @@ var Fetcher = require("./fetcher.js");
 module.exports = NodeHelper.create({
 	// Subclass start method.
 	start: function() {
-		console.log("Starting module: " + this.name);
+		// console.log("Starting module: " + this.name);
 		this.fetchers = [];
 	},
 
@@ -36,8 +37,8 @@ module.exports = NodeHelper.create({
 		var self = this;
 
 		// var url = feed.url || "";
-		
-		var url = "https://api.jcdecaux.com/vls/v1/stations/" + station.number 
+
+		var url = "https://api.jcdecaux.com/vls/v1/stations/" + station.number
 			+ "?contract=" + station.contract + "&apiKey=23cdea4379b6931b2b406ccd9f1c2aa9f9352f0c";
 
 		var encoding = "UTF-8";
@@ -50,7 +51,7 @@ module.exports = NodeHelper.create({
 
 		var fetcher;
 		if (typeof self.fetchers[url] === "undefined") {
-			console.log("Create new news fetcher for url: " + url + " - Interval: " + reloadInterval);
+			// console.log("Create new news fetcher for url: " + url + " - Interval: " + reloadInterval);
 			fetcher = new Fetcher(url, reloadInterval, encoding);
 
 			fetcher.onReceive(function(fetcher) {
@@ -66,7 +67,7 @@ module.exports = NodeHelper.create({
 
 			self.fetchers[url] = fetcher;
 		} else {
-			console.log("Use existing news fetcher for url: " + url);
+			// console.log("Use existing news fetcher for url: " + url);
 			fetcher = self.fetchers[url];
 			fetcher.setReloadInterval(reloadInterval);
 			fetcher.broadcastItems();
@@ -80,12 +81,12 @@ module.exports = NodeHelper.create({
 	 * and broadcasts these using sendSocketNotification.
 	 */
 	broadcastFeeds: function() {
-		console.log("broadcastFeeds");
+		// console.log("broadcastFeeds");
 		var feeds = {};
 		for (var f in this.fetchers) {
 			feeds[f] = this.fetchers[f].items();
-			console.log("the first station status fetched is "+ JSON.stringify(feeds[f]));
-			console.log("f is = "+f);
+			// console.log("the first station status fetched is "+ JSON.stringify(feeds[f]));
+			// console.log("f is = "+f);
 		}
 		this.sendSocketNotification("VELIB_STATUS", feeds);
 
