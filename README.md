@@ -10,7 +10,7 @@ https://fr.wikipedia.org/wiki/Cyclocity#Services_en_fonction
 
 It has been tested for // Le module a été testé pour : 
 
- - Paris, Lyon, Mulhouse, Toulouse. 
+ - Paris, Lyon, Mulhouse, Toulouse, Sevilla (Spain). 
  
 For others cities, it should work aswell, in case of unexpected issue, ask for my help at the MagicMirror Forum, link below // Pour les autres villes non vérifiées, le fonctionnement devrait être le même, en cas de bug, contacter-moi sur le forum MagicMirror ici : 
 
@@ -30,9 +30,9 @@ modules: [
 			// See 'Configuration options' for more information.
 
 			stations: [{
-					nom: "home - rue Obama", // the name of the station is irrelevant for the module which use CylcoCity reference naming. 
-					number: "11", // That's the IMPORTANT identifier : you can find the number of your stations on the web and mobile map for each city. 
-					contract: "mulhouse" // That's AS IMPORTANT AS the *number* above. Velib' is "paris", VélôToulouse is "toulouse", etc. 
+					nom: "home - rue Obama",
+					number: "11",  
+					contract: "mulhouse"  
 				},{ 
 					nom: "Place Bir Hakeim", // All your stations should belong to the same big city contract but technically you can display from other place if you like. I don't see the point though. 
 					number: "3039",
@@ -105,10 +105,10 @@ The following properties can be configured:
 			</td>
 		</tr>
 		<tr>
-			<td><code>updateInterval</code></td>
-			<td>For TESTING & DEVELOPMENT. How often does the display refresh (Milliseconds). It has to refresh at least every minute when <code>showLastCheckTime</code> is set to <code>true</code>. Don't touch that<br>
-				<br><b>Possible values:</b><code>1000</code> - <code>60000</code>
-				<br><b>Default value:</b> <code>60000</code> (60 seconds)
+			<td><code>nervouslyUpdateIntervale</code></td>
+			<td><b>IN PROGRESS: </b>That parameter would eventually push the module to poll one station more frequently than the usual <code>reloadInterval</code> when the number of free bikes or free slots would fall below a determined threshold.
+				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
+				<br><b>Default value:</b> <code>not used</code>
 			</td>
 		</tr>
 		<tr>
@@ -118,41 +118,17 @@ The following properties can be configured:
 				<br><b>Default value:</b> <code>0</code>
 			</td>
 		</tr>
-			removeStartTags: false,
-		removeEndTags: false,
-		startTags: [],
-		endTags: []
-
-
 		<tr>
-			<td><code>removeStartTags</code></td>
-			<td>Some newsfeeds feature tags at the <B>beginning</B> of their titles or descriptions, such as <em>[VIDEO]</em>.
-			This setting allows for the removal of specified tags from the beginning of an item's description and/or title.<br>
-				<br><b>Possible values:</b><code>'title'</code>, <code>'description'</code>, <code>'both'</code>
-			</td>
-		</tr>
-		<tr>
-			<td><code>startTags</code></td>
-			<td>List the tags you would like to have removed at the beginning of the feed item<br>
-				<br><b>Possible values:</b> <code>['TAG']</code> or <code>['TAG1','TAG2',...]</code>
-			</td>
-		</tr>
-		<tr>
-			<td><code>removeEndTags</code></td>
-			<td>Remove specified tags from the <B>end</B> of an item's description and/or title.<br>
-				<br><b>Possible values:</b><code>'title'</code>, <code>'description'</code>, <code>'both'</code>
-			</td>
-		</tr>
-		<tr>
-			<td><code>endTags</code></td>
-			<td>List the tags you would like to have removed at the end of the feed item<br>
-				<br><b>Possible values:</b> <code>['TAG']</code> or <code>['TAG1','TAG2',...]</code>
+			<td><code>updateInterval</code></td>
+			<td>For TESTING & DEVELOPMENT. How often does the display refresh (Milliseconds). It has to refresh at least every minute when <code>showLastCheckTime</code> is set to <code>true</code>. Don't touch that<br>
+				<br><b>Possible values:</b><code>1000</code> - <code>60000</code>
+				<br><b>Default value:</b> <code>60000</code> (60 seconds)
 			</td>
 		</tr>
 	</tbody>
 </table>
 
-The `feeds` property contains an array with multiple objects. These objects have the following properties:
+The `stations` property contains an array with 3 objects. These objects have the following properties:
 
 <table width="100%">
 	<!-- why, markdown... -->
@@ -165,24 +141,24 @@ The `feeds` property contains an array with multiple objects. These objects have
 	<tbody>
 
 		<tr>
-			<td><code>title</code></td>
-			<td>The name of the feed source to be displayed above the news items.<br>
-				<br>This property is optional.
+			<td><code>name</code></td>
+			<td>The <b>user</b> name of the station.<br>
+				<br>This property is optional. The name that will be displayed at the left of the bikes/slot/time data is for now the JCDecaux referencing name as provided by the API. It is only here for easier setting up of the stations configuration.
 			</td>
 		</tr>
 
 		<tr>
-			<td><code>url</code></td>
-			<td>The url of the feed used for the headlines.<br>
-				<br><b>Example:</b> <code>'http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml'</code>
+			<td><code>number</code></td>
+			<td>That's the first <b>key identifier</b> : inside one city, it is <b>unique</b>. You can find the number of the station you want to follow on the web or mobile for each city. It generally prefixs the name<br>
+				<br><b>Example:</b> <code>01001</code> for the station <i>01001 - ILE DE LA CITE PONT NEUF
+41 QUAI DE L'HORLOGE - 75001 PARIS</i>
+				<br><b>Example:</b> <code>75</code> for the station <i>Estación nº 75 PLAZA SAN FRANCISCO - Aprox C/ Hernando Colón</i>
 			</td>
 		</tr>
 		<tr>
-			<td><code>encoding</code></td>
-			<td>The encoding of the news feed.<br>
-				<br>This property is optional.
-				<br><b>Possible values:</b><code>'UTF-8'</code>, <code>'ISO-8859-1'</code>, etc ...
-				<br><b>Default value:</b> <code>'UTF-8'</code>
+			<td><code>contract</code></td>
+			<td>That's the second <b>key identifier</b> with <code>number</code> above. It is the name of the city which bought the bike sharing scheme from JCDecaux.<br>
+				<br><b>Possible values:</b><code>paris</code> for Vélib', <code>lyon</code>, <code>seville</code> for Sevici in Sevilla. Notice how Sevilla took the French spelling since JCDecaux is a French company. For not French cities, you might have to test a few spellings to get the right one.  
 			</td>
 		</tr>
 
