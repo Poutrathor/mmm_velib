@@ -1,5 +1,5 @@
 # Module: mmm_velib
-The `Velib` module is displaying the stations data from JCDeceaux's bike sharing system. 
+The `Velib` module is displaying the stations data from JCDecaux's bike sharing system. 
 Depending on the configurated stations, the user can see : 
  - available bikes
  - available slots
@@ -64,8 +64,7 @@ The following properties can be configured:
 			<td>An array of CycloCity Stations Number and Contract whose status will be displayed.<br>
 				More info about this object can be found below.
 				<br><b>Default value:</b> <code>[{
-			nom: "ILE DE LA CITE PONT NEUF", // The name here is only for the human user. Not use after
-			// We use the station name from the operator to avoid any issue (feature?). 
+			nom: "ILE DE LA CITE PONT NEUF",  
 			number: "01001",
 			contract: "paris"
 		}, {
@@ -92,7 +91,7 @@ The following properties can be configured:
 		</tr>
 		<tr>
 			<td><code>showLastCheckTime</code></td>
-			<td>Display how long ago was the station's data information refreshed. The module pools by default every 5 minutes, but JCDeceaux updates its information whenever and not that frequently. Set to <code>false</code> to NOT see that information<br>
+			<td>Display how long ago was the station's data information refreshed. The module pools by default every 5 minutes, but JCDecaux updates its information whenever and not that frequently. Set to <code>false</code> to NOT see that information<br>
 				<br><b>Possible values:</b> <code>true</code> or <code>false</code>
 				<br><b>Default value:</b> <code>false</code>
 			</td>
@@ -100,7 +99,7 @@ The following properties can be configured:
 
 		<tr>
 			<td><code>reloadInterval</code></td>
-			<td>How often does the station data needs to be fetched? (Milliseconds) Recommand : 5 minutes, no less than one minute (JCDeceaux certifies that period update will never be lower than one minute, experience shows around 5-10 minutes. <br>
+			<td>How often does the station data needs to be fetched? (Milliseconds) Recommand : 5 minutes, no less than one minute (JCDecaux certifies that period update will never be lower than one minute, experience shows around 5-10 minutes. <br>
 				<br><b>Possible values:</b> <code>1000</code> - <code>86400000</code>
 				<br><b>Default value:</b> <code>300000</code> (5 minutes)
 			</td>
