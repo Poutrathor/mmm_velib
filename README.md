@@ -6,6 +6,8 @@ Le module 'Velib' affiche les informations à jour des stations de vélos du sys
 The module is compatible with the following cities // Il est compatible avec les villes suivantes : 
 https://fr.wikipedia.org/wiki/Cyclocity#Services_en_fonction 
 
+![Alt text](https://raw.githubusercontent.com/Poutrathor/MMM_velib/master/screenshot.JPG?raw=true "Looks like this")
+
 You have to fill in the stations you want to follow, e.g. the stations close to your home, your workplace or your gym. The module will displayed the following data about these stations : 
 
  - available bikes
